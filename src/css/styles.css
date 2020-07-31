@@ -1,0 +1,8 @@
+.q-row{
+    display: flex;
+    flex-direction: column;
+}
+
+body{
+    padding: 10;
+}
