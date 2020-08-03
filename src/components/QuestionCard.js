@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../Button";
 import "../css/styles.css";
 import { toast } from "react-toastify";
+import { Header } from "./Header";
 
 const QuestionCard = ({
   question,
@@ -61,6 +62,7 @@ const QuestionCard = ({
           {score > 4 ? (
             <h1>
               CONGRATULATIONS! YOU ANSWERED ALL OF THE QUESTIONS CORRECTLY
+              <br />
             </h1>
           ) : (
             <div>
@@ -99,9 +101,8 @@ const QuestionCard = ({
         </>
       ) : (
         <>
-          <span>Score:{score}</span>
+          <Header count={count} />
           <br />
-          <span>Question: {count}</span>
           <div className='bg-white w-full text-green-900 p-8 rounded-lg shadow-md'>
             <h2
               className='text-2xl'
@@ -136,12 +137,11 @@ const QuestionCard = ({
                 name='Submit'
               />
             ) : (
-              <button
+              <Button
                 onClick={() => onClickNext()}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-              >
-                Next
-              </button>
+                name='Next'
+              />
             )}
           </div>
         </>
