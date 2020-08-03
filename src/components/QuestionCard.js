@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-
+import { Button } from "../Button";
 import "../css/styles.css";
 import { toast } from "react-toastify";
-
-const customId = "adiendnvaskd";
 
 const QuestionCard = ({
   question,
@@ -21,13 +19,13 @@ const QuestionCard = ({
   const onHandleAnswerClick = (ans) => {
     setItem((item) => [...item, ans]);
   };
-  
+
+  const customId = "adiendnvaskd";
   const notify = () => {
     toast.error("Please select an answer", {
       toastId: customId,
     });
   };
-
   const dismiss = () => toast.dismiss(customId.current);
 
   const onClickNext = () => {
@@ -92,12 +90,11 @@ const QuestionCard = ({
                 <strong>{question.correct_answers}</strong>
               </div>
             ))}
-            <button
+            <Button
               onClick={() => handleStartOver()}
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-            >
-              Start Over
-            </button>
+              name='Start Over'
+            />
           </div>
         </>
       ) : (
@@ -112,24 +109,32 @@ const QuestionCard = ({
             />
           </div>
           <div className='grid grid-cols-2 gap-6 mt-6'>
-            {shuffledAnswers.map((answer) => (
-              <button
-                className='bg-white w-full hover:bg-blue-200  p-4  text-green-800 font-semibold rounded shadow mb-3'
-                onClick={() => onHandleAnswerClick(answer)}
-              >
-                {answer}
-              </button>
-            ))}
+            {shuffledAnswers.map((answer) => {
+              const pressedButton = [...item];
+              const className =
+                pressedButton.pop() === answer
+                  ? `bg-blue-400 w-full hover:bg-blue-200 p-4 text-green-800 font-semibold rounded shadow mb-3`
+                  : `bg-white w-full hover:bg-blue-200 p-4 text-green-800 font-semibold rounded shadow mb-3`;
+
+              return (
+                <input
+                  type='button'
+                  className={className}
+                  value={answer}
+                  onClick={() => onHandleAnswerClick(answer)}
+                  key={answer}
+                />
+              );
+            })}
             <br />
           </div>
           <div className='inline-flex'>
             {count === 5 ? (
-              <button
+              <Button
                 onClick={() => onClickNext()}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
-              >
-                Submit
-              </button>
+                name='Submit'
+              />
             ) : (
               <button
                 onClick={() => onClickNext()}
