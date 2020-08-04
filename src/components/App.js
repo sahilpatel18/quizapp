@@ -7,13 +7,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const tenRandomQuestions = bank.splice(
-    Math.floor(Math.random() * bank.length),
-    9
-  );
 
-  const randomQuestion = tenRandomQuestions[Math.floor(Math.random() * tenRandomQuestions.length)];
 
+  const tenRandomQuestions = bank.sort(() => 0.5 - Math.random());
+  let selected = tenRandomQuestions.slice(0, 10);
+
+  const randomQuestion = selected[Math.floor(Math.random() * selected.length)];
+
+  
   const allAnswers = randomQuestion.all_answers;
   const shuffledAnswers = shuffle(allAnswers);
 
