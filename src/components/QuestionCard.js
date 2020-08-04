@@ -57,18 +57,19 @@ const QuestionCard = ({
 
   return question.question.length > 0 ? (
     <div className='container'>
-      {score > 4 || count > 5 ? (
+      {score > 9 || count > 10 ? (
         <>
-          {score > 4 ? (
-            <h1>
+          {score > 9 ? (
+            <h1 className='text-4xl underline'>
               CONGRATULATIONS! YOU ANSWERED ALL OF THE QUESTIONS CORRECTLY
               <br />
             </h1>
           ) : (
-            <div>
-              <h1>You Answered {score}/5 Questions Correctly! </h1>
+            <div style={{ position: "relative" }}>
+              <h1 className='text-center text-4xl underline p-4 bg-white text-green-900'>
+                You Answered {score}/10 Questions Correctly!{" "}
+              </h1>
               <br />
-              <h1>HERE ARE THE QUESTIONS YOU MISSED!</h1>
             </div>
           )}
           <div
@@ -77,19 +78,23 @@ const QuestionCard = ({
               flexDirection: "column",
               justifyContent: "space-between",
               minHeight: "70vh",
+              position: "relative",
             }}
           >
             {userQuestion.map((question, idx) => (
-              <div>
+              <div style={{ position: "relative" }}>
                 <div
-                  style={{ position: "sticky" }}
-                  className='bg-white text-green-900 px-32 font-semibold rounded '
+                  className='bg-white text-center text-green-900 px-32 font-semibold rounded '
                   dangerouslySetInnerHTML={{ __html: question.question }}
                 />
-                You chose <strong>{userAnswer[idx]}</strong>
+                <h2 className='text-center'>
+                  You chose <strong>{userAnswer[idx]}</strong>
+                </h2>
                 <br />
-                The correct answer is{" "}
-                <strong>{question.correct_answers}</strong>
+                <h2 className='text-center'>
+                  The correct answer is{" "}
+                  <strong>{question.correct_answers}</strong>
+                </h2>
               </div>
             ))}
             <Button
@@ -129,8 +134,8 @@ const QuestionCard = ({
             })}
             <br />
           </div>
-          <div className='inline-flex'>
-            {count === 5 ? (
+          <div>
+            {count === 10 ? (
               <Button
                 onClick={() => onClickNext()}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'

@@ -7,15 +7,17 @@ export function shuffle(array) {
   return array;
 }
 
+
+
 // makes a new array filled with the elements both arrays have in common
-export function compare(array1, array2) {
-  var newArr = [];
-  array1.forEach((element1) => {
-    array2.forEach((element2) => {
-      if (element1 === element2) {
-        newArr.push(element1);
-      }
-    });
-  });
-  return newArr;
-}
+// export function compare(array1, array2) {
+//   var newArr = [];
+//   array1.forEach((element1) => {
+//     array2.forEach((element2) => {
+//       if (element1 === element2) {
+//         newArr.push(element1);
+//       }
+//     });
+//   });
+//   return newArr;
+// }

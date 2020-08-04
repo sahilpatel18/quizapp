@@ -7,7 +7,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const randomQuestion = bank[Math.floor(Math.random() * bank.length)];
+  const tenRandomQuestions = bank.splice(
+    Math.floor(Math.random() * bank.length),
+    9
+  );
+
+  const randomQuestion = tenRandomQuestions[Math.floor(Math.random() * tenRandomQuestions.length)];
+
   const allAnswers = randomQuestion.all_answers;
   const shuffledAnswers = shuffle(allAnswers);
 
@@ -16,7 +22,7 @@ const App = () => {
 
   return (
     <div>
-     <ToastContainer />
+      <ToastContainer />
       <QuestionCard
         question={randomQuestion}
         shuffledAnswers={shuffledAnswers}
