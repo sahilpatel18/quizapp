@@ -3,21 +3,24 @@ import { Button } from "../Button";
 import "../css/styles.css";
 import { toast } from "react-toastify";
 import { Header } from "./Header";
+import { connect, useDispatch } from "react-redux";
+import { incrementScore, resetScore } from "../actions";
 
 const QuestionCard = ({
   question,
   possibleAnswers,
-  score = 0,
-  setScore,
+
+  userScore,
   count,
   setCount,
+  dispatch,
   totalQuestions,
 }) => {
   const [userAnswer, setUserAnswer] = useState([]);
   const [userQuestion, setUserQuestion] = useState([]);
   const [item, setItem] = useState([]);
   const { correct_answers } = question;
-  const [pressed, setPressed] = useState(false)
+  const [pressed, setPressed] = useState(false);
 
   const onHandleAnswerClick = (ans) => {
     setItem((item) => [...item, ans]);
@@ -31,14 +34,12 @@ const QuestionCard = ({
   };
   const dismiss = () => toast.dismiss(customId.current);
 
-
-
   const onClickSubmit = () => {
-    setPressed(true)
+    setPressed(true);
     const finalAnswer = item[item.length - 1];
     if (finalAnswer === correct_answers.toString()) {
       dismiss();
-      setScore((score) => score + 1);
+      dispatch(incrementScore);
       setItem([]);
     } else if (finalAnswer === undefined) {
       notify();
@@ -48,15 +49,13 @@ const QuestionCard = ({
       setUserAnswer((userAnswer) => [...userAnswer, finalAnswer]);
       setItem([]);
     }
-  }
-
-
+  };
 
   const onClickNext = () => {
     const finalAnswer = item[item.length - 1];
     if (finalAnswer === correct_answers.toString()) {
       dismiss();
-      setScore((score) => score + 1);
+      dispatch(incrementScore());
       setCount((count) => count + 1);
       setItem([]);
     } else if (finalAnswer === undefined) {
@@ -71,9 +70,9 @@ const QuestionCard = ({
   };
 
   const handleStartOver = () => {
-    setScore(0);
+    dispatch(resetScore());
     setCount(1);
-    setPressed(false)
+    setPressed(false);
     setUserQuestion([]);
     setUserAnswer([]);
     setItem([]);
@@ -83,7 +82,7 @@ const QuestionCard = ({
     <div className='container'>
       {pressed === true ? (
         <>
-          {score > totalQuestions - 1 ? (
+          {userScore > totalQuestions - 1 ? (
             <h1 className='text-4xl underline'>
               CONGRATULATIONS! YOU ANSWERED ALL OF THE QUESTIONS CORRECTLY
               <br />
@@ -91,7 +90,7 @@ const QuestionCard = ({
           ) : (
             <div style={{ position: "relative" }}>
               <h1 className='text-center text-4xl underline p-4 bg-white text-green-900'>
-                You Answered {score}/10 Questions Correctly!{" "}
+                You Answered {userScore}/10 Questions Correctly!{" "}
               </h1>
               <br />
             </div>
@@ -134,6 +133,7 @@ const QuestionCard = ({
         </>
       ) : (
         <>
+          Score: {userScore}
           <Header count={count} />
           <br />
           <div className='bg-white w-full text-green-900 p-8 rounded-lg shadow-md'>
