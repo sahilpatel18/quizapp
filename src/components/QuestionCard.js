@@ -6,16 +6,18 @@ import { Header } from "./Header";
 
 const QuestionCard = ({
   question,
-  shuffledAnswers,
+  possibleAnswers,
   score = 0,
   setScore,
   count,
   setCount,
+  totalQuestions,
 }) => {
   const [userAnswer, setUserAnswer] = useState([]);
   const [userQuestion, setUserQuestion] = useState([]);
   const [item, setItem] = useState([]);
   const { correct_answers } = question;
+  const [pressed, setPressed] = useState(false)
 
   const onHandleAnswerClick = (ans) => {
     setItem((item) => [...item, ans]);
@@ -28,6 +30,27 @@ const QuestionCard = ({
     });
   };
   const dismiss = () => toast.dismiss(customId.current);
+
+
+
+  const onClickSubmit = () => {
+    setPressed(true)
+    const finalAnswer = item[item.length - 1];
+    if (finalAnswer === correct_answers.toString()) {
+      dismiss();
+      setScore((score) => score + 1);
+      setItem([]);
+    } else if (finalAnswer === undefined) {
+      notify();
+    } else {
+      dismiss();
+      setUserQuestion((userQuestion) => [...userQuestion, question]);
+      setUserAnswer((userAnswer) => [...userAnswer, finalAnswer]);
+      setItem([]);
+    }
+  }
+
+
 
   const onClickNext = () => {
     const finalAnswer = item[item.length - 1];
@@ -50,16 +73,17 @@ const QuestionCard = ({
   const handleStartOver = () => {
     setScore(0);
     setCount(1);
+    setPressed(false)
     setUserQuestion([]);
     setUserAnswer([]);
     setItem([]);
   };
 
-  return question.question.length > 0 ? (
+  return totalQuestions > 0 ? (
     <div className='container'>
-      {score > 9 || count > 10 ? (
+      {pressed === true ? (
         <>
-          {score > 9 ? (
+          {score > totalQuestions - 1 ? (
             <h1 className='text-4xl underline'>
               CONGRATULATIONS! YOU ANSWERED ALL OF THE QUESTIONS CORRECTLY
               <br />
@@ -87,14 +111,18 @@ const QuestionCard = ({
                   className='bg-white text-center text-green-900 px-32 font-semibold rounded '
                   dangerouslySetInnerHTML={{ __html: question.question }}
                 />
-                <h2 className='text-center'>
-                  You chose <strong>{userAnswer[idx]}</strong>
-                </h2>
+                <span>
+                  <h2 className='text-center'>
+                    You chose <strong>{userAnswer[idx]}</strong>
+                  </h2>
+                </span>
                 <br />
-                <h2 className='text-center'>
-                  The correct answer is{" "}
-                  <strong>{question.correct_answers}</strong>
-                </h2>
+                <span>
+                  <h2 className='text-center'>
+                    The correct answer is{" "}
+                    <strong>{question.correct_answers}</strong>
+                  </h2>
+                </span>
               </div>
             ))}
             <Button
@@ -115,7 +143,7 @@ const QuestionCard = ({
             />
           </div>
           <div className='grid grid-cols-2 gap-6 mt-6'>
-            {shuffledAnswers.map((answer) => {
+            {possibleAnswers.map((answer) => {
               const pressedButton = [...item];
               const className =
                 pressedButton.pop() === answer
@@ -135,15 +163,15 @@ const QuestionCard = ({
             <br />
           </div>
           <div>
-            {count === 10 ? (
+            {count === totalQuestions ? (
               <Button
-                onClick={() => onClickNext()}
+                onClick={onClickSubmit}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
                 name='Submit'
               />
             ) : (
               <Button
-                onClick={() => onClickNext()}
+                onClick={onClickNext}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
                 name='Next'
               />
