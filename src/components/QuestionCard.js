@@ -3,16 +3,18 @@ import { Button } from "../Button";
 import "../css/styles.css";
 import { toast } from "react-toastify";
 import { Header } from "./Header";
-import { connect, useDispatch } from "react-redux";
-import { incrementScore, resetScore } from "../actions";
+import {
+  incrementScore,
+  resetScore,
+  incrementQuestions,
+  restartQuestions,
+} from "../actions";
 
 const QuestionCard = ({
   question,
   possibleAnswers,
-
   userScore,
-  count,
-  setCount,
+  currentQuestion,
   dispatch,
   totalQuestions,
 }) => {
@@ -39,7 +41,7 @@ const QuestionCard = ({
     const finalAnswer = item[item.length - 1];
     if (finalAnswer === correct_answers.toString()) {
       dismiss();
-      dispatch(incrementScore);
+      dispatch(incrementScore());
       setItem([]);
     } else if (finalAnswer === undefined) {
       notify();
@@ -56,7 +58,7 @@ const QuestionCard = ({
     if (finalAnswer === correct_answers.toString()) {
       dismiss();
       dispatch(incrementScore());
-      setCount((count) => count + 1);
+      dispatch(incrementQuestions());
       setItem([]);
     } else if (finalAnswer === undefined) {
       notify();
@@ -64,14 +66,14 @@ const QuestionCard = ({
       dismiss();
       setUserQuestion((userQuestion) => [...userQuestion, question]);
       setUserAnswer((userAnswer) => [...userAnswer, finalAnswer]);
-      setCount((count) => count + 1);
+      dispatch(incrementQuestions());
       setItem([]);
     }
   };
 
   const handleStartOver = () => {
     dispatch(resetScore());
-    setCount(1);
+    dispatch(restartQuestions());
     setPressed(false);
     setUserQuestion([]);
     setUserAnswer([]);
@@ -133,8 +135,7 @@ const QuestionCard = ({
         </>
       ) : (
         <>
-          Score: {userScore}
-          <Header count={count} />
+          <Header count={currentQuestion} />
           <br />
           <div className='bg-white w-full text-green-900 p-8 rounded-lg shadow-md'>
             <h2
@@ -163,7 +164,7 @@ const QuestionCard = ({
             <br />
           </div>
           <div>
-            {count === totalQuestions ? (
+            {currentQuestion === totalQuestions ? (
               <Button
                 onClick={onClickSubmit}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
