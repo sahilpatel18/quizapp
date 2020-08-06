@@ -81,7 +81,7 @@ const QuestionCard = ({
   };
 
   return totalQuestions > 0 ? (
-    <div className='container'>
+    <div className='container relative'>
       {pressed === true ? (
         <>
           {userScore > totalQuestions - 1 ? (
@@ -98,13 +98,7 @@ const QuestionCard = ({
             </div>
           )}
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              minHeight: "70vh",
-              position: "relative",
-            }}
+            className='absolute'
           >
             {userQuestion.map((question, idx) => (
               <div style={{ position: "relative" }}>

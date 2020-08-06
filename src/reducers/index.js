@@ -1,11 +1,10 @@
- import userScoreReducer from './userScoreReducer'
- import currentQuestionReducer from './currentQuestionReducer'
- import {combineReducers} from 'redux'
+import userScoreReducer from "./userScoreReducer";
+import currentQuestionReducer from "./currentQuestionReducer";
+import { combineReducers } from "redux";
 
+const allReducers = combineReducers({
+  userScore: userScoreReducer,
+  currentQuestion: currentQuestionReducer,
+});
 
- const allReducers = combineReducers({
-     userScore: userScoreReducer,
-     currentQuestion: currentQuestionReducer
- })
-
- export default allReducers
+export default allReducers;
