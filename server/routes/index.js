@@ -2,7 +2,7 @@ const express = require("express");
 const Questions = require("../models/question.model");
 const router = express.Router();
 
-router.get("/api/questions", (req, res) => {
+router.get("/questions", (req, res) => {
   const { size = 5 } = req.query;
   Questions.aggregate([
     // { $match: { difficulty } },
@@ -16,7 +16,7 @@ router.get("/api/questions", (req, res) => {
     });
 });
 
-router.get("/api/questions/:id", (req, res) => {
+router.get("/questions/:id", (req, res) => {
   Questions.findById(req.params.id)
     .then((data) => {
       res.json(data);
