@@ -7,6 +7,10 @@ const quizRoute = require("./routes/index");
 
 app.use(cors());
 
+
+
+
+
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
 });
