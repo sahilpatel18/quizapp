@@ -27,7 +27,7 @@ const Quiz = ({ randomQuestions }) => {
         dispatch={dispatch}
         currentQuestion={currentQuestion}
         userScore={userScore}
-        totalQuestions={randomQuestions.length || 10}
+        totalQuestions={randomQuestions.length || 5}
       />
     </div>
   );

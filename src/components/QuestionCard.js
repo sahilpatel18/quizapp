@@ -92,7 +92,7 @@ const QuestionCard = ({
           ) : (
             <div style={{ position: "relative" }}>
               <h1 className='text-center text-4xl underline p-4 bg-white text-green-900'>
-                You Answered {userScore}/10 Questions Correctly!{" "}
+                You Answered {userScore}/{totalQuestions} Questions Correctly!{" "}
               </h1>
               <br />
             </div>
