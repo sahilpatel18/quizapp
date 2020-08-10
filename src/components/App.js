@@ -1,22 +1,22 @@
-import React from "react";
-import bank from "../bank";
-import Quiz from "./Quiz";
-import { shuffle } from "../utils";
-
-
-
+import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Quiz from "./Quiz";
+import axios from "axios";
 
 const App = () => {
+  const [questions, setQuestions] = useState([]);
 
+  const getQuestions = async () => {
+    const response = await axios(`/api/questions`);
+    setQuestions(response.data);
+  };
 
-  const randomQuestions = shuffle(bank).slice(0, 10);
+  useEffect(getQuestions, []);
+
   return (
     <div>
       <ToastContainer />
-      <Quiz randomQuestions={randomQuestions} />
-
+      <Quiz randomQuestions={questions} />
     </div>
   );
 };

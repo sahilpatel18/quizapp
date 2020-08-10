@@ -11,7 +11,7 @@ import {
 } from "../actions";
 
 const QuestionCard = ({
-  question,
+  question = {},
   possibleAnswers,
   userScore,
   currentQuestion,
@@ -21,7 +21,7 @@ const QuestionCard = ({
   const [userAnswer, setUserAnswer] = useState([]);
   const [userQuestion, setUserQuestion] = useState([]);
   const [item, setItem] = useState([]);
-  const { correct_answers } = question;
+  const { correct_answers = [] } = question;
   const [pressed, setPressed] = useState(false);
 
   const onHandleAnswerClick = (ans) => {
@@ -97,9 +97,7 @@ const QuestionCard = ({
               <br />
             </div>
           )}
-          <div
-            className='absolute'
-          >
+          <div className='absolute'>
             {userQuestion.map((question, idx) => (
               <div style={{ position: "relative" }}>
                 <div
@@ -138,7 +136,7 @@ const QuestionCard = ({
             />
           </div>
           <div className='grid grid-cols-2 gap-6 mt-6'>
-            {possibleAnswers.map((answer) => {
+            {(possibleAnswers || []).map((answer) => {
               const pressedButton = [...item];
               const className =
                 pressedButton.pop() === answer

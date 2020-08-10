@@ -163,6 +163,7 @@ const bank = [
     id: 17,
     category: "Science: Computers",
     type: "multiple",
+    difficulty: "medium",
     question: "What does CPU stand for?",
     correct_answers: ["Central Processing Unit"],
     all_answers: [
@@ -176,6 +177,7 @@ const bank = [
     id: 18,
     category: "Science: Computers",
     type: "multiple",
+    difficulty: "hard",
     question:
       "What was the name of the security vulnerability found in Bash in 2014?",
     correct_answers: ["Shellshock"],
@@ -185,6 +187,7 @@ const bank = [
     id: 19,
     category: "Science: Computers",
     type: "multiple",
+    difficulty: "easy",
     question:
       "When Gmail first launched, how much storage did it provide for your email?",
     correct_answers: ["1GB"],
@@ -194,6 +197,7 @@ const bank = [
     id: 20,
     category: "Science: Computers",
     type: "multiple",
+    difficulty: "hard",
     question: "What five letter word is the motto of the IBM Computer company?",
     correct_answers: ["Think"],
     all_answers: ["Click", "Logic", "Pixel", "Think"],

@@ -7,13 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 
 const Quiz = ({ randomQuestions }) => {
-  const currentQuestion = useSelector((state) => state.currentQuestion);
-  const userScore = useSelector((state) => state.userScore);
-  const dispatch = useDispatch();
+  const { currentQuestion, userScore } = useSelector((state) => state);
 
-  const randomQuestion = randomQuestions[currentQuestion - 1];
-console.log(randomQuestions);
-  const possibleAnswers = shuffle([...randomQuestion.all_answers]);
+  const dispatch = useDispatch();
+  const randomQuestion =
+    randomQuestions && randomQuestions[currentQuestion - 1];
+
+  const possibleAnswers =
+    randomQuestion &&
+    randomQuestion.all_answers &&
+    shuffle([...randomQuestion.all_answers]);
 
   return (
     <div>
